@@ -16,6 +16,8 @@ ENV \
   QTWEBENGINE_DISABLE_SANDBOX="1" \
   LIBATION_RELEASE="${LIBATION_RELEASE:-latest}"
 
+ARG TARGETARCH
+
 RUN \
   echo "**** install runtime packages ****" && \
   apt-get update && \
@@ -31,8 +33,8 @@ RUN \
     LIBATION_TAG="${LIBATION_RELEASE}"; \
   fi && \
   echo "Using Libation release tag: ${LIBATION_TAG}" && \
-  LIBATION_URL=$(curl -sX GET "https://api.github.com/repos/rmcrackan/Libation/releases/tags/${LIBATION_TAG}" | jq -r '.assets[] | select(.name | endswith("linux-chardonnay-amd64.deb")) | .browser_download_url' | head -n 1) && \
-  echo "Downloading Libation from: ${LIBATION_URL}" && \
+  LIBATION_URL=$(curl -sX GET "https://api.github.com/repos/rmcrackan/Libation/releases/tags/${LIBATION_TAG}" | jq -r --arg arch "$TARGETARCH" '.assets[] | select(.name | endswith("linux-chardonnay-" + $arch + ".deb")) | .browser_download_url' | head -n 1) && \
+  echo "Downloading Libation for ${TARGETARCH} from: ${LIBATION_URL}" && \
   curl -L -o /tmp/libation.deb "${LIBATION_URL}" && \
   apt-get install -y /tmp/libation.deb && \
   rm /tmp/libation.deb && \

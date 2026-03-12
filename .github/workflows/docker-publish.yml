@@ -33,23 +33,14 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build and push AMD64
+      - name: Build and push Multi-arch
         uses: docker/build-push-action@v5
         with:
           context: .
           file: ./Dockerfile
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: |
             ghcr.io/${{ github.repository }}:latest
             ghcr.io/${{ github.repository }}:amd64
-
-      - name: Build and push ARM64
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile.aarch64
-          platforms: linux/arm64
-          push: true
-          tags: |
             ghcr.io/${{ github.repository }}:arm64
