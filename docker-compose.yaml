@@ -1,6 +1,6 @@
 services:
   libation:
-    image: libation-selkies:latest
+    image: ghcr.io/git-lemur/docker-libation-selkies:latest
     container_name: libation
     build:
       context: .

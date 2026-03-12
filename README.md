@@ -21,7 +21,7 @@ Create a `docker-compose.yaml` (or use the one provided in this repo):
 ```yaml
 services:
   libation:
-    image: libation-selkies:latest
+    image: ghcr.io/git-lemur/docker-libation-selkies:latest
     container_name: libation
     environment:
       - PUID=1000
