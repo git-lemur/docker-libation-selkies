@@ -24,7 +24,7 @@ services:
       - TZ=Etc/UTC
     volumes:
       - ./config:/config
-      - ./downloads:/data
+      - ./downloads:/config/Libation/Books
     ports:
       - 8080:8080
     restart: unless-stopped
@@ -59,7 +59,7 @@ docker build -t libation-selkies .
 ## Volumes
 
 - `/config`: Stores Libation settings, database, and logs.
-- `/data`: Default location for downloaded audiobooks.
+- `/config/Libation/Books`: Default location for downloaded audiobooks (mapped to `./downloads`).
 
 ## License
 

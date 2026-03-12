@@ -9,7 +9,7 @@ services:
       - TITLE=Libation
     volumes:
       - ./config:/config
-      - ./downloads:/data
+      - ./downloads:/config/Libation/Books
     ports:
       - 8080:8080
       - 8181:8181
