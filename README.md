@@ -10,13 +10,8 @@ A web-accessible version of [Libation](https://github.com/rmcrackan/Libation), a
 
 ## Quick Start
 
-### 1. Build the image
-```bash
-docker build -t libation-selkies .
-```
-
-### 2. Run with Docker Compose
-Create a `docker-compose.yaml` (or use the one provided in this repo):
+### 1. Create a `docker-compose.yaml`
+You can download the `docker-compose.yaml` from this repository or create a new one with the following content:
 
 ```yaml
 services:
@@ -35,7 +30,9 @@ services:
     restart: unless-stopped
 ```
 
-Run it:
+### 2. Run the container
+Run the following command in the same directory as your `docker-compose.yaml`:
+
 ```bash
 docker-compose up -d
 ```
@@ -43,6 +40,12 @@ docker-compose up -d
 ### 3. Access
 Open your browser and navigate to:
 `http://localhost:8080`
+
+## Custom Build (Optional)
+If you want to build the image locally from source:
+```bash
+docker build -t libation-selkies .
+```
 
 ## Environment Variables
 
