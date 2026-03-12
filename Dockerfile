@@ -23,30 +23,19 @@ RUN \
     dbus \
     ca-certificates \
     curl \
-    unzip \
-    jq \
-    libnss3 \
-    libasound2 \
-    libx11-6 \
-    libxrandr2 \
-    libxss1 \
-    libxtst6 \
-    libx11-xcb1 \
-    libxkbcommon0 \
-    libgtk-3-0 && \
+    jq && \
   echo "**** install Libation ****" && \
-  mkdir -p /opt/libation && \
   if [ "${LIBATION_RELEASE}" = "latest" ]; then \
     LIBATION_TAG=$(curl -sX GET "https://api.github.com/repos/rmcrackan/Libation/releases/latest" | jq -r .tag_name); \
   else \
     LIBATION_TAG="${LIBATION_RELEASE}"; \
   fi && \
   echo "Using Libation release tag: ${LIBATION_TAG}" && \
-  LIBATION_URL="https://github.com/rmcrackan/Libation/releases/download/${LIBATION_TAG}/Libation-${LIBATION_TAG}-linux-x64.zip" && \
-  curl -L -o /tmp/libation.zip "${LIBATION_URL}" && \
-  unzip /tmp/libation.zip -d /opt/libation && \
-  rm /tmp/libation.zip && \
-  chmod +x /opt/libation/Libation || true && \
+  LIBATION_URL=$(curl -sX GET "https://api.github.com/repos/rmcrackan/Libation/releases/tags/${LIBATION_TAG}" | jq -r '.assets[] | select(.name | endswith("linux-chardonnay-amd64.deb")) | .browser_download_url' | head -n 1) && \
+  echo "Downloading Libation from: ${LIBATION_URL}" && \
+  curl -L -o /tmp/libation.deb "${LIBATION_URL}" && \
+  apt-get install -y /tmp/libation.deb && \
+  rm /tmp/libation.deb && \
   dbus-uuidgen > /etc/machine-id && \
   printf "docker-libation version: %s\nBuild-date: %s" "${VERSION}" "${BUILD_DATE}" > /build_version && \
   echo "**** cleanup ****" && \
@@ -54,3 +43,10 @@ RUN \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 COPY root/ /
+
+RUN \
+  apt-get update && \
+  apt-get install -y dos2unix && \
+  dos2unix /defaults/autostart /defaults/autostart_wayland && \
+  chmod +x /defaults/autostart /defaults/autostart_wayland && \
+  apt-get clean

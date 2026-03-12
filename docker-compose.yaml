@@ -1,0 +1,19 @@
+services:
+  libation:
+    image: libation-selkies:latest
+    container_name: libation
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - TITLE=Libation
+    volumes:
+      - ./config:/config
+      - ./downloads:/data
+    ports:
+      - 8080:8080
+      - 8181:8181
+    restart: unless-stopped

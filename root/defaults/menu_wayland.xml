@@ -3,7 +3,7 @@
   <menu id="root-menu" label="Applications">
     <item label="Libation">
       <action name="Execute">
-        <command>/opt/libation/Libation</command>
+        <command>libation</command>
       </action>
     </item>
   </menu>

@@ -1,2 +1,8 @@
 #!/usr/bin/env bash
-/opt/libation/Libation &
+
+# The .deb installs a 'libation' symlink in /usr/bin
+if hash libation 2>/dev/null; then
+    libation &
+else
+    /usr/lib/libation/Libation &
+fi
