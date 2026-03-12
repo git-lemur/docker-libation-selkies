@@ -22,6 +22,8 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Etc/UTC
+      - CUSTOM_USER=admin
+      - PASSWORD=password123
     volumes:
       - ./config:/config
       - ./downloads:/config/Libation/Books
@@ -55,6 +57,8 @@ docker build -t libation-selkies .
 | `PGID` | Group ID for file permissions |
 | `TZ` | Timezone (e.g., `America/New_York`) |
 | `TITLE` | Window title for the web interface |
+| `CUSTOM_USER` | Username for web interface authentication |
+| `PASSWORD` | Password for web interface authentication |
 
 ## Volumes
 

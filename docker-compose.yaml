@@ -7,6 +7,8 @@ services:
       - PGID=1000
       - TZ=Etc/UTC
       - TITLE=Libation
+      - CUSTOM_USER=admin
+      - PASSWORD=password123 # RECOMMENDED: Change this password
     volumes:
       - ./config:/config
       - ./downloads:/config/Libation/Books
